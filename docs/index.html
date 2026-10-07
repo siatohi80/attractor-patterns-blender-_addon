@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attractor Patterns for Blender</title>
+<meta name="description" content="A free Blender add-on: 14 Geometry Nodes patterns for perforations, textures and cutouts on any object, driven by point and line attractors.">
+<meta property="og:title" content="Attractor Patterns for Blender">
+<meta property="og:description" content="14 Geometry Nodes patterns for perforations, textures and cutouts, driven by point and line attractors.">
+<meta property="og:image" content="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f3f4f5; --surface:#ffffff; --fg:#1b1f24; --muted:#5b636d; --line:#d5d9de;
+  --metal:#2c3238; --accent:#d9661f; --field:#2f5d8a; --code:#eef0f2;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171a; --surface:#1c2024; --fg:#e7eaed; --muted:#9aa3ad; --line:#30363d;
+  --metal:#0f1215; --accent:#f08a45; --field:#7fb0e0; --code:#252a30; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171a; --surface:#1c2024; --fg:#e7eaed; --muted:#9aa3ad; --line:#30363d;
+  --metal:#0f1215; --accent:#f08a45; --field:#7fb0e0; --code:#252a30; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding:0 16px 64px}
+.wrap{max-width:1080px;margin:0 auto}
+a{color:var(--field)}
+a:hover{color:var(--accent)}
+img{max-width:100%;height:auto;display:block}
+nav{display:flex;flex-wrap:wrap;gap:6px 18px;padding:18px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--accent)}
+nav .brand{font-family:var(--display);font-weight:800;color:var(--fg);margin-right:auto}
+header{padding:48px 0 24px}
+h1{font-family:var(--display);font-weight:800;font-stretch:80%;font-size:clamp(2.2rem,6vw,3.6rem);line-height:1;margin:6px 0 14px}
+h2{font-family:var(--display);font-weight:700;font-stretch:90%;font-size:clamp(1.5rem,3vw,2rem);line-height:1.1;margin:0 0 12px}
+h3{font-family:var(--display);font-weight:700;font-stretch:95%;font-size:1.1rem;margin:0 0 4px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:60ch;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{color:#fff;filter:brightness(1.08)}
+.btn small{font-family:var(--mono);font-weight:400;font-size:.75rem;opacity:.85}
+.meta{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.hero{background:var(--metal);border-radius:8px;padding:10px;margin:28px 0 8px}
+.hero img{border-radius:4px;width:100%}
+figcaption,.cap{font-size:.85rem;color:var(--muted);margin-top:8px}
+section{padding:44px 0 8px;border-top:1px solid var(--line);margin-top:36px}
+section > p{max-width:70ch}
+.steps{counter-reset:s;list-style:none;padding:0;margin:20px 0 0;display:grid;gap:14px}
+.steps > li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px 16px 62px;position:relative}
+.steps > li::before{content:counter(s);position:absolute;left:18px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font:600 .95rem/30px var(--mono);text-align:center}
+.steps p{margin:.3rem 0}
+kbd,code{font-family:var(--mono);font-size:.86em;background:var(--code);border-radius:4px;padding:1px 5px}
+kbd{border:1px solid var(--line);border-bottom-width:2px}
+.ui{font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.card p{margin:.3rem 0 0;color:var(--muted);font-size:.95rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:0}
+.tile img{aspect-ratio:16/9;object-fit:cover;width:100%;background:var(--metal)}
+.tile figcaption{padding:10px 12px 12px;margin:0}
+.tile b{display:block;color:var(--fg);font-family:var(--display);font-size:1rem}
+.tile .n{font-family:var(--mono);color:var(--accent);font-size:.75rem;margin-right:6px}
+.drive{color:var(--field)}
+.table{overflow-x:auto;margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap;color:var(--muted)}
+td:nth-child(2){white-space:nowrap;font-weight:600}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.note{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;border-radius:0 6px 6px 0;margin:16px 0;max-width:70ch}
+ul.tight{padding-left:1.2em;max-width:70ch}
+ul.tight li{margin:.35rem 0}
+pre{background:var(--code);border-radius:6px;padding:12px 14px;overflow-x:auto;font:.85rem/1.5 var(--mono)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <span class="brand">Attractor Patterns</span>
+  <a href="#download">Download</a>
+  <a href="#install">Install</a>
+  <a href="#tutorial">Tutorial</a>
+  <a href="#patterns">Patterns</a>
+  <a href="#parameters">Parameters</a>
+  <a href="#tips">Tips</a>
+</nav>
+
+<header>
+  <div class="eyebrow">Blender add-on · Geometry Nodes · v0.1.0</div>
+  <h1>Attractor Patterns for Blender</h1>
+  <p class="lede">Fourteen pattern modifiers that put perforations, textures and cutouts on any object. Every pattern is driven by point and line attractors: move an empty or bend a curve and the pattern grows, shrinks, rotates or opens up around it.</p>
+  <div class="cta" id="download">
+    <a class="btn primary" href="download/attractor_patterns-0.1.0.zip" download>Download add-on <small>.zip · 25 KB</small></a>
+    <a class="btn" href="download/attractor_patterns.blend" download>Asset library <small>.blend · 0.8 MB</small></a>
+  </div>
+  <div class="meta">Blender 4.2 or newer · 4.5+ recommended · free, GPL-3.0-or-later</div>
+  <figure class="hero">
+    <img src="img/hero.jpg" alt="Eight of the patterns, coloured by attractor strength from blue (far) to red (near)" width="1630" height="468">
+  </figure>
+  <figcaption>Voronoi, honeycomb, reaction diffusion, slots, flow lines, circle packing, shape morph and Truchet arcs, each with one line and one point attractor. Colour shows the attractor field, blue far and red near.</figcaption>
+</header>
+
+<section id="install">
+  <div class="eyebrow">Step 0</div>
+  <h2>Install</h2>
+  <ol class="steps">
+    <li><p>Download <a href="download/attractor_patterns-0.1.0.zip" download>attractor_patterns-0.1.0.zip</a>. Don't unzip it.</p></li>
+    <li><p>In Blender, open <span class="ui">Edit › Preferences › Get Extensions</span>. Click the <span class="ui">⌄</span> menu at the top right and choose <span class="ui">Install from Disk…</span>, then pick the zip.</p>
+        <p class="cap">You can also drag the zip straight into the Blender window.</p></li>
+    <li><p>Close Preferences. In the 3D Viewport press <kbd>N</kbd> to open the sidebar and click the <span class="ui">Patterns</span> tab.</p></li>
+  </ol>
+  <div class="note">Blender 4.5 or newer is recommended. It has the Manifold boolean solver, which cuts a pattern in about a second. Blender 4.2 falls back to the Exact solver, which gives the same result but can take minutes on dense patterns.</div>
+</section>
+
+<section id="tutorial">
+  <div class="eyebrow">Tutorial</div>
+  <h2>Your first perforated panel</h2>
+  <p>This walks through a flat panel. The same steps work on curved objects; see <a href="#curved">curved surfaces</a> below.</p>
+  <ol class="steps">
+    <li>
+      <h3>Make a panel with a good UV map</h3>
+      <p>Add a <span class="ui">Plane</span> (<kbd>Shift</kbd> <kbd>A</kbd> › Mesh › Plane) and scale it to the panel size, for example 640 × 360 mm. Apply the scale with <kbd>Ctrl</kbd> <kbd>A</kbd> › <span class="ui">Scale</span>.</p>
+      <p>The pattern is laid out on the UV map at real size, so the UVs must keep the object's proportions. A default plane is fine once its scale is applied. For other objects use <span class="ui">UV › Smart UV Project</span> or <span class="ui">Project from View</span>, and avoid stretching UVs to fill the square.</p>
+    </li>
+    <li>
+      <h3>Add an attractor</h3>
+      <p>Place the 3D cursor where you want the effect and click <span class="ui">Point</span> or <span class="ui">Line</span> in the Patterns tab.</p>
+      <p>A point attractor is an empty in the <code>AP Attractor Points</code> collection. A line attractor is a curve in <code>AP Attractor Lines</code>; edit it like any curve, or drop any mesh into that collection to use its edges. Add as many as you like.</p>
+    </li>
+    <li>
+      <h3>Add a pattern</h3>
+      <p>Select the panel and click a pattern name, for example <span class="ui">Round Perforation</span>. It's added as a Geometry Nodes modifier in <span class="ui">Preview</span> mode, sized so about 25 cells fit across the object.</p>
+      <p>Preview colours each opening by the field, so you can see where the attractors reach. Move an attractor and the pattern follows live.</p>
+    </li>
+    <li>
+      <h3>Tune it in the modifier panel</h3>
+      <p>Open the <span class="ui">Modifier</span> properties (the wrench). The inputs are grouped into four panels:</p>
+      <p><b>Pattern</b> sets the cell size and seed. <b>Attractors</b> sets the radius, falloff curve and how several attractors combine. <b>Fabrication</b> sets the minimum bridge, minimum hole, edge margin and corner radius your cutter can handle. <b>Output</b> sets the mode and sheet thickness.</p>
+    </li>
+    <li>
+      <h3>Choose an output mode and export</h3>
+      <p>Switch <span class="ui">Output › Mode</span> to the geometry you need, then apply the modifier (<kbd>Ctrl</kbd> <kbd>A</kbd> over it) or export directly.</p>
+      <div class="cards">
+        <div class="card"><h3>Cut Through</h3><p>Real holes through a sheet of the given thickness. For laser, waterjet and 3D printing.</p></div>
+        <div class="card"><h3>Engrave</h3><p>Shapes sunk into the surface by Depth. For CNC pockets and textures.</p></div>
+        <div class="card"><h3>Emboss</h3><p>Shapes raised above the surface by Depth. For relief, moulds and studs.</p></div>
+        <div class="card"><h3>Preview</h3><p>Fast, flat shapes coloured by the field. For designing and rendering.</p></div>
+      </div>
+      <p class="cap">Open surfaces such as a plane are thickened inward by Thickness, so the result is always a closed solid that 3D prints and booleans cleanly.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="patterns">
+  <div class="eyebrow">14 patterns</div>
+  <h2>What each pattern does with the field</h2>
+  <p>Each pattern maps the attractor field onto one thing about its shapes. These are the same 14 families as the <a href="https://siatohi80.github.io/attractor-patterns-site/">2D playground</a>, with the same parameters.</p>
+  <div class="gallery">
+    <figure class="tile"><img loading="lazy" src="img/holes.jpg" alt="Round perforation"><figcaption><b><span class="n">01</span>Round Perforation</b><span class="drive">Hole diameter</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/honey.jpg" alt="Honeycomb"><figcaption><b><span class="n">02</span>Honeycomb</b><span class="drive">Wall thickness</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/diamond.jpg" alt="Diamond mesh"><figcaption><b><span class="n">03</span>Diamond Mesh</b><span class="drive">Opening size and squash</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/jewel.jpg" alt="Jewel studs"><figcaption><b><span class="n">04</span>Jewel Studs</b><span class="drive">Pyramid height; the apex leans toward the attractor</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/slots.jpg" alt="Rotating slots"><figcaption><b><span class="n">05</span>Rotating Slots</b><span class="drive">Slot angle, or direction and length with Align</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/voronoi.jpg" alt="Voronoi cells"><figcaption><b><span class="n">06</span>Voronoi Cells</b><span class="drive">Cell density and wall thickness</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/delaunay.jpg" alt="Triangulated panels"><figcaption><b><span class="n">07</span>Triangulated Panels</b><span class="drive">Opening size per triangle</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/morph.jpg" alt="Shape morph"><figcaption><b><span class="n">08</span>Shape Morph</b><span class="drive">Circle to rounded square, plus size</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/star.jpg" alt="Star tiling"><figcaption><b><span class="n">09</span>Star Tiling</b><span class="drive">Star sharpness</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/truchet.jpg" alt="Truchet arcs"><figcaption><b><span class="n">10</span>Truchet Arcs</b><span class="drive">Tile on or off, slot width, orientation with Align</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/contours.jpg" alt="Flow lines"><figcaption><b><span class="n">11</span>Flow Lines</b><span class="drive">Line spacing and groove width</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/packing.jpg" alt="Circle packing"><figcaption><b><span class="n">12</span>Circle Packing</b><span class="drive">Circle size</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/halftone.jpg" alt="Halftone"><figcaption><b><span class="n">13</span>Halftone</b><span class="drive">Dot size from an image times the field</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/rd.jpg" alt="Reaction diffusion"><figcaption><b><span class="n">14</span>Reaction Diffusion</b><span class="drive">Feed and kill rates: spots far away, mazes near</span></figcaption></figure>
+  </div>
+  <p class="cap">Preview mode on a 640 × 360 mm sheet. Jewel Studs is shown in Emboss mode, since it's a relief rather than a perforation.</p>
+</section>
+
+<section id="parameters">
+  <div class="eyebrow">Reference</div>
+  <h2>Modifier inputs</h2>
+  <p>All lengths are in scene units in the object's local space. The add-on scales the defaults to the object when it adds a pattern.</p>
+  <div class="table"><table>
+    <thead><tr><th>Panel</th><th>Input</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Pattern</td><td>Cell Size</td><td>Grid pitch, or typical spacing for seeded patterns</td></tr>
+      <tr><td></td><td>Seed</td><td>Random seed for Voronoi, Triangulated, Packing, Truchet and Reaction Diffusion</td></tr>
+      <tr><td></td><td>Align</td><td>Slots and Truchet: follow the attractor direction</td></tr>
+      <tr><td></td><td>Image</td><td>Halftone only: the image whose darkness sizes the dots</td></tr>
+      <tr><td></td><td>Iterations, Resolution</td><td>Reaction Diffusion only: simulation steps, and grid cells per Cell Size</td></tr>
+      <tr><td>Attractors</td><td>Attractor Points / Lines</td><td>Collections of empties, and of curves or meshes</td></tr>
+      <tr><td></td><td>Radius</td><td>Influence radius. The field is 0 beyond it</td></tr>
+      <tr><td></td><td>Falloff</td><td>Smooth, Linear, Gaussian, Inverse Square or Stepped</td></tr>
+      <tr><td></td><td>Combine</td><td>Max (the strongest attractor wins) or Sum</td></tr>
+      <tr><td></td><td>Invert</td><td>Swap near and far</td></tr>
+      <tr><td>Fabrication</td><td>Min Bridge</td><td>Minimum web of material between openings</td></tr>
+      <tr><td></td><td>Min Hole</td><td>Openings smaller than this are removed, never shrunk further</td></tr>
+      <tr><td></td><td>Edge Margin</td><td>Solid border kept along open edges and holes in the mesh</td></tr>
+      <tr><td></td><td>Corner Radius</td><td>Fillet on sharp corners, for laser and waterjet</td></tr>
+      <tr><td>Output</td><td>Mode</td><td>Cut Through, Engrave, Emboss or Preview</td></tr>
+      <tr><td></td><td>Thickness</td><td>Sheet thickness. Open surfaces are thickened inward by this</td></tr>
+      <tr><td></td><td>Depth</td><td>Engrave depth or emboss height</td></tr>
+      <tr><td></td><td>UV Map, UV Scale</td><td>Which UV map, and the real length of one UV unit (0 measures it from the mesh)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="cap">Preview mode also stores the field on the mesh as the <code>ap_field</code> attribute and assigns the <code>AP Field</code> material, so you can use it in shaders.</p>
+</section>
+
+<section id="curved">
+  <div class="eyebrow">Beyond flat panels</div>
+  <h2>Curved surfaces</h2>
+  <div class="two">
+    <div>
+      <p>The pattern is drawn flat on the UV map at real scale, then every vertex is projected back onto the surface. A 24 mm cell stays 24 mm on a cylinder or a sphere, shapes bend with the surface, and the edge margin follows the mesh's own open edges and holes.</p>
+      <p>The attractor field is measured in 3D, so an empty floating beside a lamp shade or a curve wrapped around a column works the way you'd expect.</p>
+      <p>Unwrap cylinders with <span class="ui">UV › Cylinder Projection</span> or a seam and <span class="ui">Unwrap</span>. For spheres, a seam-and-unwrap or Smart UV Project keeps cells more even than the default UV sphere map.</p>
+    </div>
+    <figure style="margin:0">
+      <img src="img/curved.jpg" alt="Flow lines, round perforation, honeycomb and Voronoi cut through a cylinder and a sphere" loading="lazy" width="1400" height="700" style="border-radius:8px;border:1px solid var(--line)">
+      <figcaption>Cut Through on a cylinder and a sphere: flow lines, round perforation, honeycomb and Voronoi.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="tips">
+  <div class="eyebrow">Good to know</div>
+  <h2>Tips and limits</h2>
+  <ul class="tight">
+    <li><b>Apply scale first.</b> Distances are measured in the object's local space, so an object scaled ×2 doubles every length.</li>
+    <li><b>UVs set the layout.</b> The pattern stretches wherever the UVs do. Shapes that cross a UV seam are dropped, so place seams where the pattern can stop.</li>
+    <li><b>Design in Preview.</b> Cutting is the slow part. Stay in Preview while you place attractors, then switch modes.</li>
+    <li><b>Reaction Diffusion is heavy.</b> It reruns the whole simulation on every change. Lower Iterations or Resolution while designing.</li>
+    <li><b>Flow lines on closed surfaces.</b> A line that wraps all the way round a cylinder can fail with the Manifold solver; the modifier then falls back to Exact, which is slow there. Engrave always works.</li>
+    <li><b>Patterns keep working without the add-on.</b> The node groups are saved in your .blend, so files open fine on machines without it. Use <span class="ui">Rebuild Node Groups</span> in the Patterns tab after updating the add-on.</li>
+  </ul>
+
+  <h3 style="margin-top:28px">Using the asset library instead</h3>
+  <p style="max-width:70ch">If you'd rather not install an add-on, download <a href="download/attractor_patterns.blend" download>attractor_patterns.blend</a>, add its folder under <span class="ui">Preferences › File Paths › Asset Libraries</span>, and drag patterns from the Asset Browser onto a mesh. Put your attractors in collections and pick them in the modifier's Attractor Points and Attractor Lines fields.</p>
+</section>
+
+<section id="family">
+  <div class="eyebrow">The family</div>
+  <h2>Same patterns, other tools</h2>
+  <div class="cards">
+    <a class="card" href="https://siatohi80.github.io/attractor-patterns-site/" style="text-decoration:none;color:inherit"><h3>2D playground</h3><p>Try every pattern in the browser and export SVG, DXF or PNG.</p></a>
+    <a class="card" href="https://siatohi80.github.io/pattern-plugin_Grasshopper/" style="text-decoration:none;color:inherit"><h3>Grasshopper plug-in</h3><p>The same patterns as components for Rhino 8.</p></a>
+  </div>
+</section>
+
+<footer>
+  <span>Attractor Patterns for Blender v0.1.0 by Siavash Tohidi</span>
+  <span>Free software under GPL-3.0-or-later</span>
+</footer>
+
+</div>
+</body>
+</html>
