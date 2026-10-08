@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Attractor Patterns for Blender</title>
-<meta name="description" content="A free Blender add-on: 14 Geometry Nodes patterns for perforations, textures and cutouts on any object, driven by point and line attractors.">
+<meta name="description" content="A free Blender add-on: 21 Geometry Nodes patterns for perforations, textures and cutouts on any object, driven by point and line attractors.">
 <meta property="og:title" content="Attractor Patterns for Blender">
-<meta property="og:description" content="14 Geometry Nodes patterns for perforations, textures and cutouts, driven by point and line attractors.">
+<meta property="og:description" content="21 Geometry Nodes patterns for perforations, textures and cutouts, driven by point and line attractors.">
 <meta property="og:image" content="img/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -101,12 +101,12 @@ footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-si
 </nav>
 
 <header>
-  <div class="eyebrow">Blender add-on · Geometry Nodes · v0.1.0</div>
+  <div class="eyebrow">Blender add-on · Geometry Nodes · v0.2.0</div>
   <h1>Attractor Patterns for Blender</h1>
-  <p class="lede">Fourteen pattern modifiers that put perforations, textures and cutouts on any object. Every pattern is driven by point and line attractors: move an empty or bend a curve and the pattern grows, shrinks, rotates or opens up around it.</p>
+  <p class="lede">Twenty-one pattern modifiers that put perforations, textures and cutouts on any object. Every pattern is driven by point and line attractors: move an empty or bend a curve and the pattern grows, shrinks, rotates or opens up around it.</p>
   <div class="cta" id="download">
-    <a class="btn primary" href="download/attractor_patterns-0.1.0.zip" download>Download add-on <small>.zip · 25 KB</small></a>
-    <a class="btn" href="download/attractor_patterns.blend" download>Asset library <small>.blend · 0.8 MB</small></a>
+    <a class="btn primary" href="download/attractor_patterns-0.2.0.zip" download>Download add-on <small>.zip · 28 KB</small></a>
+    <a class="btn" href="download/attractor_patterns.blend" download>Asset library <small>.blend · 1 MB</small></a>
   </div>
   <div class="meta">Blender 4.2 or newer · 4.5+ recommended · free, GPL-3.0-or-later</div>
   <figure class="hero">
@@ -119,7 +119,7 @@ footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="eyebrow">Step 0</div>
   <h2>Install</h2>
   <ol class="steps">
-    <li><p>Download <a href="download/attractor_patterns-0.1.0.zip" download>attractor_patterns-0.1.0.zip</a>. Don't unzip it.</p></li>
+    <li><p>Download <a href="download/attractor_patterns-0.2.0.zip" download>attractor_patterns-0.2.0.zip</a>. Don't unzip it.</p></li>
     <li><p>In Blender, open <span class="ui">Edit › Preferences › Get Extensions</span>. Click the <span class="ui">⌄</span> menu at the top right and choose <span class="ui">Install from Disk…</span>, then pick the zip.</p>
         <p class="cap">You can also drag the zip straight into the Blender window.</p></li>
     <li><p>Close Preferences. In the 3D Viewport press <kbd>N</kbd> to open the sidebar and click the <span class="ui">Patterns</span> tab.</p></li>
@@ -167,9 +167,9 @@ footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-si
 </section>
 
 <section id="patterns">
-  <div class="eyebrow">14 patterns</div>
+  <div class="eyebrow">21 patterns</div>
   <h2>What each pattern does with the field</h2>
-  <p>Each pattern maps the attractor field onto one thing about its shapes. These are the same 14 families as the <a href="https://siatohi80.github.io/attractor-patterns-site/">2D playground</a>, with the same parameters.</p>
+  <p>Each pattern maps the attractor field onto one thing about its shapes. These are the same 21 families as the <a href="https://siatohi80.github.io/attractor-patterns-site/">2D playground</a>, with the same parameters.</p>
   <div class="gallery">
     <figure class="tile"><img loading="lazy" src="img/holes.jpg" alt="Round perforation"><figcaption><b><span class="n">01</span>Round Perforation</b><span class="drive">Hole diameter</span></figcaption></figure>
     <figure class="tile"><img loading="lazy" src="img/honey.jpg" alt="Honeycomb"><figcaption><b><span class="n">02</span>Honeycomb</b><span class="drive">Wall thickness</span></figcaption></figure>
@@ -185,6 +185,13 @@ footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-si
     <figure class="tile"><img loading="lazy" src="img/packing.jpg" alt="Circle packing"><figcaption><b><span class="n">12</span>Circle Packing</b><span class="drive">Circle size</span></figcaption></figure>
     <figure class="tile"><img loading="lazy" src="img/halftone.jpg" alt="Halftone"><figcaption><b><span class="n">13</span>Halftone</b><span class="drive">Dot size from an image times the field</span></figcaption></figure>
     <figure class="tile"><img loading="lazy" src="img/rd.jpg" alt="Reaction diffusion"><figcaption><b><span class="n">14</span>Reaction Diffusion</b><span class="drive">Feed and kill rates: spots far away, mazes near</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/strut.jpg" alt="Strut Lattice"><figcaption><b><span class="n">15</span>Strut Lattice</b><span class="drive">Strut width: big triangular openings near, round swelling nodes far away</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/ytiles.jpg" alt="Y Tiles"><figcaption><b><span class="n">16</span>Y Tiles</b><span class="drive">Arm length and width</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/nesthex.jpg" alt="Nested Hexagons"><figcaption><b><span class="n">17</span>Nested Hexagons</b><span class="drive">Ring width; a second inner ring appears near the attractor</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/sunflower.jpg" alt="Sunflower"><figcaption><b><span class="n">18</span>Sunflower</b><span class="drive">Dot size along a golden-angle spiral</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/herring.jpg" alt="Herringbone Slots"><figcaption><b><span class="n">19</span>Herringbone Slots</b><span class="drive">Slot length and width, rows leaning alternately</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/pinwheel.jpg" alt="Pinwheel Slits"><figcaption><b><span class="n">20</span>Pinwheel Slits</b><span class="drive">Twist and size of lens slits</span></figcaption></figure>
+    <figure class="tile"><img loading="lazy" src="img/xdiamond.jpg" alt="Cross-slot Diamonds"><figcaption><b><span class="n">21</span>Cross-slot Diamonds</b><span class="drive">Slot length, until slots meet as diamond outlines</span></figcaption></figure>
   </div>
   <p class="cap">Preview mode on a 640 × 360 mm sheet. Jewel Studs is shown in Emboss mode, since it's a relief rather than a perforation.</p>
 </section>
@@ -261,7 +268,7 @@ footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-si
 </section>
 
 <footer>
-  <span>Attractor Patterns for Blender v0.1.0 by Siavash Tohidi</span>
+  <span>Attractor Patterns for Blender v0.2.0 by Siavash Tohidi</span>
   <span>Free software under GPL-3.0-or-later</span>
 </footer>
 
